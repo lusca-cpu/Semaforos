@@ -1,0 +1,28 @@
+--exemplo 1
+MODULE main
+
+VAR
+	estado:{s0, s1, s2};
+	cor:{r, g, y};
+	
+ASSIGN
+	init(estado):= s0;
+	next(estado):= case
+						estado=s0 & cor=r: s1;
+						estado=s1 & cor=g: s2;
+						estado=s2 & cor=y: s0;
+						TRUE: estado;
+					esac;
+					
+	next(cor):= case
+					cor=r: g;
+					cor=g: y;
+					cor=y: r;
+				esac;
+					
+SPEC 
+	AG(estado=s0 & cor=r -> AF estado=s1)
+	
+SPEC
+	AG(cor=g -> AX cor=y)
+	
